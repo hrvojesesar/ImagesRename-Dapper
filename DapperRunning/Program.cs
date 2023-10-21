@@ -7,29 +7,22 @@ using Newtonsoft.Json.Linq;
 
 Console.WriteLine("Dobro dosli \n");
 
-var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-var configuration = builder.Build();
-
-string vanjskaKuca = configuration["Folder:vanjskiIzvor"];
-string unutarnjaKuca = configuration["Folder:unutarnjiIzvor"];
-string posrednikKuca = configuration["Folder:posrednik"];
-string slike = configuration["Folder:slikee"];
-
-Console.WriteLine(string.Format("Vanjski izvor: {0}", vanjskaKuca));
-Console.WriteLine(string.Format("Unutarnji izvor: {0}", unutarnjaKuca));
-Console.WriteLine(string.Format("Posrednik: {0}", posrednikKuca));
-Console.WriteLine(string.Format("Slike: {0}", slike));
-
 while (true)
 {
-    string vanjski = $"C:\\Users\\User\\Desktop\\vanjskiIzvor";
-    string unutarnji = $"C:\\Users\\User\\Desktop\\unutarnjiIzvor";
-    string posrednik = $"C:\\Users\\User\\Desktop\\posrednik";
+    var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+    var configuration = builder.Build();
+
+    string vanjskaKuca = configuration["Folder:vanjskiIzvor"];
+    string unutarnjaKuca = configuration["Folder:unutarnjiIzvor"];
+    string posrednikFolder = configuration["Folder:posrednik"];
+    string slikeFolder = configuration["Folder:slikee"];
+
 
     Console.WriteLine("Molimo unesite opciju:  \n");
     Console.WriteLine("1. Dodaj turnir \n");
     Console.WriteLine("2. Azuriraj turnir(e) \n");
     Console.WriteLine("3. Prikazi turnire koji nemaju sliku te im dodijeli \n");
+
     int opcija;
     opcija = int.Parse(Console.ReadLine());
     switch (opcija)
@@ -157,7 +150,7 @@ while (true)
                             int turnirID = turnir.IDTurnir;
                             int idBetradarTournament = turnir.BetradarTournamentID;
 
-                            string existingImagePath = Path.Combine(unutarnji, turnirID + ".png");
+                            string existingImagePath = Path.Combine(unutarnjaKuca, turnirID + ".png");
                             if (File.Exists(existingImagePath))
                             {
                                 Console.WriteLine("Slika za turnir ID-a " + turnirID + " vec postoji!");
@@ -188,13 +181,13 @@ while (true)
 
                             bool neMoze = false;
 
-                            foreach (string file in Directory.EnumerateFiles(vanjski, "*.png"))
+                            foreach (string file in Directory.EnumerateFiles(vanjskaKuca, "*.png"))
                             {
                                 string fileName = Path.GetFileNameWithoutExtension(file);
                                 if (turnirID == idBetradarTournament && turnirID.ToString() == fileName)
                                 {
     
-                                    string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={file}";
+                                    string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnjaKuca}&newFilePath={file}";
                                     HttpResponseMessage preimenuj = await client2.PutAsync(apiUrl2, null);
 
                                     if (preimenuj.IsSuccessStatusCode)
@@ -213,7 +206,7 @@ while (true)
                                     string newFileName = turnirID.ToString();
                                     string oldName = idBetradarTournament.ToString();
 
-                                    foreach (string file2 in Directory.EnumerateFiles(vanjski, "*.png"))
+                                    foreach (string file2 in Directory.EnumerateFiles(vanjskaKuca, "*.png"))
                                     {
                                         string fileName2 = Path.GetFileNameWithoutExtension(file2);
                                         if (newFileName == fileName2)
@@ -224,7 +217,7 @@ while (true)
                                     }
                                     if (neMoze == true)
                                     {
-                                        string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={idBetradarTournament}&newImagePath={posrednik}&newFilePath={file}";
+                                        string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={idBetradarTournament}&newImagePath={posrednikFolder}&newFilePath={file}";
                                         HttpResponseMessage preimenuj2 = await client2.PutAsync(apiUrl2, null);
 
                                         if (preimenuj2.IsSuccessStatusCode)
@@ -233,7 +226,7 @@ while (true)
 
                                             string resultContent = await preimenuj2.Content.ReadAsStringAsync();
 
-                                            string apiUrl3 = $"api/Images/PreimenujSliku?idTurnir={turnirID}&imagePath={posrednik}&file={resultContent}"; 
+                                            string apiUrl3 = $"api/Images/PreimenujSliku?idTurnir={turnirID}&imagePath={posrednikFolder}&file={resultContent}"; 
 
                                             HttpResponseMessage preimenuj3 = await client2.PutAsync(apiUrl3, null);
 
@@ -242,7 +235,7 @@ while (true)
                                             if (preimenuj3.IsSuccessStatusCode)
                                             {
                                                 Console.WriteLine("Slika je uspjesno preimenovana!");
-                                                string apiUrl4 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={resultContent2}"; //ovdje je problem
+                                                string apiUrl4 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnjaKuca}&newFilePath={resultContent2}"; //ovdje je problem
                                                 HttpResponseMessage premjesti = await client2.PutAsync(apiUrl4, null);
 
                                                 if (premjesti.IsSuccessStatusCode)
@@ -270,7 +263,7 @@ while (true)
                                     }
                                    
 
-                                    string apiUrl = $"api/Images/PreimenujSliku?idTurnir={turnirID}&imagePath={vanjski}&file={file}";
+                                    string apiUrl = $"api/Images/PreimenujSliku?idTurnir={turnirID}&imagePath={vanjskaKuca}&file={file}";
 
                                     HttpResponseMessage preimenuj = await client2.PutAsync(apiUrl, null);
 
@@ -279,7 +272,7 @@ while (true)
                                     if (preimenuj.IsSuccessStatusCode)
                                     {
                                         Console.WriteLine("Slika je uspjesno preimenovana!");
-                                        string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={content2}";
+                                        string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnjaKuca}&newFilePath={content2}";
                                         HttpResponseMessage premjesti = await client2.PutAsync(apiUrl2, null);
 
                                         if (premjesti.IsSuccessStatusCode)
@@ -388,6 +381,15 @@ static async Task PrikaziTurnireBezSlika()
 
 static async Task DodijeliSliku()
 {
+    var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+    var configuration = builder.Build();
+
+    string vanjskaKuca = configuration["Folder:vanjskiIzvor"];
+    string unutarnjaKuca = configuration["Folder:unutarnjiIzvor"];
+    string posrednikFolder = configuration["Folder:posrednik"];
+    string slikeFolder = configuration["Folder:slikee"];
+
+
     using var client = new HttpClient();
     client.BaseAddress = new Uri("https://localhost:7034/");
 
@@ -401,11 +403,6 @@ static async Task DodijeliSliku()
 
         foreach (var turnir in turniri)
         {
-
-            string vanjski = $"C:\\Users\\User\\Desktop\\vanjskiIzvor";
-            string unutarnji = $"C:\\Users\\User\\Desktop\\unutarnjiIzvor";
-            string posrednik = $"C:\\Users\\User\\Desktop\\posrednik";
-            string slikee = $"C:\\Users\\User\\Desktop\\slikeee";
             int isUploaded = 0;
 
             int? turnirIDNullable = turnir.TurnirID;
@@ -416,9 +413,9 @@ static async Task DodijeliSliku()
                
             }
 
-            foreach (string file in Directory.EnumerateFiles(slikee, "*.png"))
+            foreach (string file in Directory.EnumerateFiles(slikeFolder, "*.png"))
             {
-                string apiUrl = $"api/Images/PreimenujSliku?idTurnir={turnirIDNullable}&imagePath={slikee}&file={file}";
+                string apiUrl = $"api/Images/PreimenujSliku?idTurnir={turnirIDNullable}&imagePath={slikeFolder}&file={file}";
                 HttpResponseMessage preimenuj = await client.PutAsync(apiUrl, null);
 
                 var content2 = await preimenuj.Content.ReadAsStringAsync();
@@ -426,7 +423,7 @@ static async Task DodijeliSliku()
                 if (preimenuj.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Slika je uspjesno preimenovana!");
-                    string apiUrl2 = $"api/Images/DodijeliSliku?idTurnir={turnirIDNullable}&newImagePath={unutarnji}&newFilePath={content2}";
+                    string apiUrl2 = $"api/Images/DodijeliSliku?idTurnir={turnirIDNullable}&newImagePath={unutarnjaKuca}&newFilePath={content2}";
                     HttpResponseMessage premjesti = await client.PutAsync(apiUrl2, null);
 
                     if (premjesti.IsSuccessStatusCode)
