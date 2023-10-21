@@ -7,6 +7,19 @@ using Newtonsoft.Json.Linq;
 
 Console.WriteLine("Dobro dosli \n");
 
+var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+var configuration = builder.Build();
+
+string vanjskaKuca = configuration["Folder:vanjskiIzvor"];
+string unutarnjaKuca = configuration["Folder:unutarnjiIzvor"];
+string posrednikKuca = configuration["Folder:posrednik"];
+string slike = configuration["Folder:slikee"];
+
+Console.WriteLine(string.Format("Vanjski izvor: {0}", vanjskaKuca));
+Console.WriteLine(string.Format("Unutarnji izvor: {0}", unutarnjaKuca));
+Console.WriteLine(string.Format("Posrednik: {0}", posrednikKuca));
+Console.WriteLine(string.Format("Slike: {0}", slike));
+
 while (true)
 {
     string vanjski = $"C:\\Users\\User\\Desktop\\vanjskiIzvor";

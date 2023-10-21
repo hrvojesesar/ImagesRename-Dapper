@@ -16,7 +16,7 @@ builder.Services.AddSingleton(serviceProvider =>
     var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ApplicationException("Missing connection string");
     return new SqlConnectionFactory(connectionString);
 });
-2
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
