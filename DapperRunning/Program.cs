@@ -181,7 +181,7 @@ while (true)
                                 if (turnirID == idBetradarTournament && turnirID.ToString() == fileName)
                                 {
     
-                                    string apiUrl2 = $"Slike/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={file}";
+                                    string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={file}";
                                     HttpResponseMessage preimenuj = await client2.PutAsync(apiUrl2, null);
 
                                     if (preimenuj.IsSuccessStatusCode)
@@ -211,7 +211,7 @@ while (true)
                                     }
                                     if (neMoze == true)
                                     {
-                                        string apiUrl2 = $"Slike/PremjestiSliku?idTurnir={idBetradarTournament}&newImagePath={posrednik}&newFilePath={file}";
+                                        string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={idBetradarTournament}&newImagePath={posrednik}&newFilePath={file}";
                                         HttpResponseMessage preimenuj2 = await client2.PutAsync(apiUrl2, null);
 
                                         if (preimenuj2.IsSuccessStatusCode)
@@ -220,7 +220,7 @@ while (true)
 
                                             string resultContent = await preimenuj2.Content.ReadAsStringAsync();
 
-                                            string apiUrl3 = $"Slike/PreimenujSliku?idTurnir={turnirID}&imagePath={posrednik}&file={resultContent}"; 
+                                            string apiUrl3 = $"api/Images/PreimenujSliku?idTurnir={turnirID}&imagePath={posrednik}&file={resultContent}"; 
 
                                             HttpResponseMessage preimenuj3 = await client2.PutAsync(apiUrl3, null);
 
@@ -229,7 +229,7 @@ while (true)
                                             if (preimenuj3.IsSuccessStatusCode)
                                             {
                                                 Console.WriteLine("Slika je uspjesno preimenovana!");
-                                                string apiUrl4 = $"Slike/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={resultContent2}"; //ovdje je problem
+                                                string apiUrl4 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={resultContent2}"; //ovdje je problem
                                                 HttpResponseMessage premjesti = await client2.PutAsync(apiUrl4, null);
 
                                                 if (premjesti.IsSuccessStatusCode)
@@ -257,7 +257,7 @@ while (true)
                                     }
                                    
 
-                                    string apiUrl = $"Slike/PreimenujSliku?idTurnir={turnirID}&imagePath={vanjski}&file={file}";
+                                    string apiUrl = $"api/Images/PreimenujSliku?idTurnir={turnirID}&imagePath={vanjski}&file={file}";
 
                                     HttpResponseMessage preimenuj = await client2.PutAsync(apiUrl, null);
 
@@ -266,7 +266,7 @@ while (true)
                                     if (preimenuj.IsSuccessStatusCode)
                                     {
                                         Console.WriteLine("Slika je uspjesno preimenovana!");
-                                        string apiUrl2 = $"Slike/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={content2}";
+                                        string apiUrl2 = $"api/Images/PremjestiSliku?idTurnir={turnirID}&newImagePath={unutarnji}&newFilePath={content2}";
                                         HttpResponseMessage premjesti = await client2.PutAsync(apiUrl2, null);
 
                                         if (premjesti.IsSuccessStatusCode)
@@ -405,7 +405,7 @@ static async Task DodijeliSliku()
 
             foreach (string file in Directory.EnumerateFiles(slikee, "*.png"))
             {
-                string apiUrl = $"Slike/PreimenujSliku?idTurnir={turnirIDNullable}&imagePath={slikee}&file={file}";
+                string apiUrl = $"api/Images/PreimenujSliku?idTurnir={turnirIDNullable}&imagePath={slikee}&file={file}";
                 HttpResponseMessage preimenuj = await client.PutAsync(apiUrl, null);
 
                 var content2 = await preimenuj.Content.ReadAsStringAsync();
@@ -413,7 +413,7 @@ static async Task DodijeliSliku()
                 if (preimenuj.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Slika je uspjesno preimenovana!");
-                    string apiUrl2 = $"Slike/DodijeliSliku?idTurnir={turnirIDNullable}&newImagePath={unutarnji}&newFilePath={content2}";
+                    string apiUrl2 = $"api/Images/DodijeliSliku?idTurnir={turnirIDNullable}&newImagePath={unutarnji}&newFilePath={content2}";
                     HttpResponseMessage premjesti = await client.PutAsync(apiUrl2, null);
 
                     if (premjesti.IsSuccessStatusCode)

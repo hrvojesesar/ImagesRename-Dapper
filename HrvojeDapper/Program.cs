@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -15,7 +16,7 @@ builder.Services.AddSingleton(serviceProvider =>
     var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ApplicationException("Missing connection string");
     return new SqlConnectionFactory(connectionString);
 });
-
+2
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -29,6 +30,6 @@ app.UseHttpsRedirection();
 app.MapTurnirImageEndpoints();
 app.MapCurrentIDEndpoints();
 app.MapTurnir_SEndpoints();
-app.MapSlikeEndpoints();
+app.MapControllers();
 
 app.Run();
