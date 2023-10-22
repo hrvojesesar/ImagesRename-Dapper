@@ -444,7 +444,7 @@ static async Task DodijeliSliku()
             }
             if (isUploaded == 1)
             {
-                string updateUrl = $"TurnirImage/UpdateStatusImageID/{turnirIDNullable}"; // Pretpostavlja se da očekujete turnirID kao dio URL-a
+                string updateUrl = $"TurnirImage/UpdateStatusImageID/{turnirIDNullable}"; 
 
                 HttpResponseMessage updateResponse = await client.PutAsync(updateUrl, null);
 

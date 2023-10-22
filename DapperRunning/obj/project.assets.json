@@ -2995,11 +2995,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ImagesRename-Dapper\\DapperRunning\\DapperRunning.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\ImagesRename-Dapper\\DapperRunning\\DapperRunning.csproj",
       "projectName": "DapperRunning",
-      "projectPath": "D:\\ImagesRename-Dapper\\DapperRunning\\DapperRunning.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\ImagesRename-Dapper\\DapperRunning\\DapperRunning.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\ImagesRename-Dapper\\DapperRunning\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\ImagesRename-Dapper\\DapperRunning\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3020,8 +3020,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\ImagesRename-Dapper\\HrvojeDapper\\HrvojeDapper.csproj": {
-              "projectPath": "D:\\ImagesRename-Dapper\\HrvojeDapper\\HrvojeDapper.csproj"
+            "C:\\Users\\User\\Desktop\\ImagesRename-Dapper\\HrvojeDapper\\HrvojeDapper.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\ImagesRename-Dapper\\HrvojeDapper\\HrvojeDapper.csproj"
             }
           }
         }

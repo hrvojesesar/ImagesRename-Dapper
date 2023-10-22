@@ -1,8 +1,5 @@
-using Dapper;
 using HrvojeDapper.Endpoints;
-using HrvojeDapper.Models;
 using HrvojeDapper.Services;
-using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
